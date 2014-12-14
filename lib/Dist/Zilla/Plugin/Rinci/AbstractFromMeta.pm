@@ -163,4 +163,3 @@ metadata, why repeat it in the dzil Abstract?
 
 L<Rinci>
 
-L<Dist::Zilla::Plugin::Rinci::PodnameFromMeta>
