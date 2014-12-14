@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
 
+0.02    2014-12-14 (PERLANCAR)
+
+	- [Bugfix] Checking existing abstract # ABSTRACT should be moved to
+	  _get_abstract_from_meta() routine.
+
+
 0.01     2014-12-14 (PERLANCAR)
 
          - First release.
