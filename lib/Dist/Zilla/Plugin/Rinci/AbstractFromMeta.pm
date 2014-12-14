@@ -20,7 +20,6 @@ with (
 
 use Data::Dump qw(dump);
 use File::Spec::Functions qw(catfile);
-use Perinci::Sub::Normalize qw(normalize_function_metadata);
 
 sub _get_abstract_from_meta {
     my ($self, $filename) = @_;
