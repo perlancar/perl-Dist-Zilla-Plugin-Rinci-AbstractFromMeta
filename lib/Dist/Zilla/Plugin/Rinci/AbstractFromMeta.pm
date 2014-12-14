@@ -82,7 +82,8 @@ sub _get_abstract_from_meta {
     $abstract;
 }
 
-# btw, why does dzil need to know abstract for main module before build?
+# dzil also wants to get abstract for main module to put in dist's
+# META.{yml,json}
 sub before_build {
    my $self  = shift;
    my $name  = $self->zilla->name;
