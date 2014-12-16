@@ -176,6 +176,11 @@ sub munge_file {
     my ($self, $file) = @_;
     my $content = $file->content;
 
+    unless ($file->isa("Dist::Zilla::File::OnDisk")) {
+        $self->log_debug(["skipping %s: not an ondisk file, currently generated file is assumed to be OK", $file->name]);
+        return;
+    }
+
     my $abstract = $self->_get_abstract_from_meta($file->name);
     unless (defined $abstract) {
         die "Can't figure out abstract for " . $file->name;
