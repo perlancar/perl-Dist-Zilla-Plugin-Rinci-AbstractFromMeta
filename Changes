@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
 
+0.04    2014-12-16 (PERLANCAR)
+
+	- Skip generated files for now.
+
+
 0.03    2014-12-16 (PERLANCAR)
 
         - Support Perinci::CmdLine-based scripts (including ones that embed
