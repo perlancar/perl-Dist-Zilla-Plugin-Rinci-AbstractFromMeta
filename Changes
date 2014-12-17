@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
 
+0.05    2014-12-17 (PERLANCAR)
+
+	- If first function has no summary, try next function; Add logging.
+
+
 0.04    2014-12-16 (PERLANCAR)
 
 	- Skip generated files for now.
