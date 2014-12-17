@@ -48,7 +48,7 @@ sub _get_from_module {
         # list functions, sorted by the length of its metadata dump
         my @funcs =
             map {$_->[0]}
-                sort {length($a->[1]) <=> length($b->[1])}
+                sort {length($b->[1]) <=> length($a->[1])}
                     map { [$_, dump($metas->{$_})] }
                         grep {/\A\w+\z/} keys %$metas;
         if (@funcs) {
