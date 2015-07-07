@@ -22,12 +22,12 @@ use Data::Dump qw(dump);
 use File::Slurp::Tiny qw(read_file);
 use File::Spec::Functions qw(catfile);
 
-# either provide filename or filecontent
+# either provide filename or filename+filecontent
 sub _get_from_module {
     my ($self, $filename, $filecontent) = @_;
 
     my $pkg;
-    if ($filename) {
+    if (!defined($filecontent)) {
         (my $mod_p = $filename) =~ s!^lib/!!;
         require $mod_p;
 
@@ -81,14 +81,14 @@ sub _get_from_module {
     return $abstract;
 }
 
-# either provide filename or filecontent
+# either provide filename or filename+filecontent
 sub _get_from_script {
     require File::Temp;
 
     my ($self, $filename, $filecontent) = @_;
 
     # check if script uses Perinci::CmdLine
-    if ($filename) {
+    if (!defined($filecontent)) {
         $filecontent = read_file $filename;
     } else {
         # we need an actual file later when we feed to pericmd dumper
@@ -149,14 +149,14 @@ sub _get_from_script {
     return $meta->{summary};
 }
 
-# either provide filename or filecontent
+# either provide filename or filename+filecontent
 sub _get_abstract_from_meta {
     my ($self, $filename, $filecontent) = @_;
 
     local @INC = @INC;
     unshift @INC, 'lib';
 
-    if ($filename) {
+    unless (defined $filecontent) {
         $filecontent = do {
             open my($fh), "<", $filename or die "Can't open $filename: $!";
             local $/;
@@ -220,7 +220,7 @@ sub munge_file {
         return;
     }
 
-    my $abstract = $self->_get_abstract_from_meta(undef, $file->content);
+    my $abstract = $self->_get_abstract_from_meta($file->name, $file->content);
     unless (defined $abstract) {
         die "Can't figure out abstract for " . $file->name;
     }
