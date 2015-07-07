@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
 
+0.08    2015-07-07 (PERLANCAR)
+
+	- Fix logic bug.
+
+
 0.07    2015-07-07 (PERLANCAR)
 
 	- Handle non-ondisk file.
