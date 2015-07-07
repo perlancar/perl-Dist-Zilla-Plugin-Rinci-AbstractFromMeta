@@ -22,14 +22,26 @@ use Data::Dump qw(dump);
 use File::Slurp::Tiny qw(read_file);
 use File::Spec::Functions qw(catfile);
 
+# either provide filename or filecontent
 sub _get_from_module {
-    my ($self, $filename) = @_;
+    my ($self, $filename, $filecontent) = @_;
 
-    (my $mod_p = $filename) =~ s!^lib/!!;
-    require $mod_p;
+    my $pkg;
+    if ($filename) {
+        (my $mod_p = $filename) =~ s!^lib/!!;
+        require $mod_p;
 
-    # find out the package of the file
-    (my $pkg = $mod_p) =~ s/\.pm\z//; $pkg =~ s!/!::!g;
+        # find out the package of the file
+        ($pkg = $mod_p) =~ s/\.pm\z//; $pkg =~ s!/!::!g;
+    } else {
+        eval $filecontent;
+        die if $@;
+        if ($filecontent =~ /\bpackage\s+(\w+(?:::\w+)*)/s) {
+            $pkg = $1;
+        } else {
+            die "Can't extract package name from file content";
+        }
+    }
 
     no strict 'refs';
     my $metas = \%{"$pkg\::SPEC"};
@@ -69,13 +81,23 @@ sub _get_from_module {
     return $abstract;
 }
 
+# either provide filename or filecontent
 sub _get_from_script {
-    my ($self, $filename) = @_;
+    require File::Temp;
+
+    my ($self, $filename, $filecontent) = @_;
 
     # check if script uses Perinci::CmdLine
-    my $ct = read_file $filename;
-    unless ($ct =~ /\b(?:use|require)\s+
-                    (Perinci::CmdLine(?:::Lite|::Any)?)\b/x) {
+    if ($filename) {
+        $filecontent = read_file $filename;
+    } else {
+        # we need an actual file later when we feed to pericmd dumper
+        require File::Temp;
+        (undef, $filename) = File::Temp::tempfile();
+    }
+
+    unless ($filecontent =~ /\b(?:use|require)\s+
+                             (Perinci::CmdLine(?:::Lite|::Any)?)\b/x) {
         return undef;
     }
 
@@ -127,19 +149,22 @@ sub _get_from_script {
     return $meta->{summary};
 }
 
+# either provide filename or filecontent
 sub _get_abstract_from_meta {
-    my ($self, $filename) = @_;
+    my ($self, $filename, $filecontent) = @_;
 
     local @INC = @INC;
     unshift @INC, 'lib';
 
-    my $content = do {
-        open my($fh), "<", $filename or die "Can't open $filename: $!";
-        local $/;
-        ~~<$fh>;
-    };
+    if ($filename) {
+        $filecontent = do {
+            open my($fh), "<", $filename or die "Can't open $filename: $!";
+            local $/;
+            ~~<$fh>;
+        };
+    }
 
-    unless ($content =~ m{^#[ \t]*ABSTRACT:[ \t]*([^\n]*)[ \t]*$}m) {
+    unless ($filecontent =~ m{^#[ \t]*ABSTRACT:[ \t]*([^\n]*)[ \t]*$}m) {
         $self->log_debug(["Skipping %s: no # ABSTRACT", $filename]);
         return undef;
     }
@@ -195,7 +220,7 @@ sub munge_file {
         return;
     }
 
-    my $abstract = $self->_get_abstract_from_meta($file->name);
+    my $abstract = $self->_get_abstract_from_meta(undef, $file->content);
     unless (defined $abstract) {
         die "Can't figure out abstract for " . $file->name;
     }
@@ -238,4 +263,3 @@ metadata, why repeat it in the dzil Abstract?
 =head1 SEE ALSO
 
 L<Rinci>
-
