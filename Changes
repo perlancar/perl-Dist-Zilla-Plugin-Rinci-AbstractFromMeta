@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
 
+0.07    2015-07-07 (PERLANCAR)
+
+	- Handle non-ondisk file.
+
+
 0.06    2014-12-17 (PERLANCAR)
 
 	- [Bugfix] sort functions from longest meta dump, not shortest.
