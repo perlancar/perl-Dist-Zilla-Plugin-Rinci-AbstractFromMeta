@@ -200,7 +200,7 @@ sub before_build {
    open my $fh, '<', $filename or die "File ${filename} cannot open: $!";
 
    my $abstract = $self->_get_abstract_from_meta($filename);
-   die "Can't get abstract for main module " . $filename unless $abstract;
+   return unless $abstract;
 
    $self->zilla->abstract($abstract);
    return;
@@ -221,9 +221,7 @@ sub munge_file {
     }
 
     my $abstract = $self->_get_abstract_from_meta($file->name, $file->content);
-    unless (defined $abstract) {
-        die "Can't figure out abstract for " . $file->name;
-    }
+    return unless $abstract;
 
     $content =~ s{^#\s*ABSTRACT:.*}{# ABSTRACT: $abstract}m
         or die "Can't insert abstract for " . $file->name;
