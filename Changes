@@ -1,5 +1,3 @@
-Revision history for Dist-Zilla-Plugin-Rinci-AbstractFromMeta
-
 0.09    2015-12-09 (PERLANCAR)
 
 	- Don't die when can't get abstract, to allow other plugins to deal
