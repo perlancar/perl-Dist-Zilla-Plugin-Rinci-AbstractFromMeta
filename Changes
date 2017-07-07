@@ -1,3 +1,12 @@
+0.10    2017-07-07 (PERLANCAR)
+
+	- [dist] Remove preamble text in Changes.
+
+	- [dist] Add nytprof* to .gitignore.
+
+	- [dist] Re-pass lint-prereqs (core modules must now be listed).
+
+
 0.09    2015-12-09 (PERLANCAR)
 
 	- Don't die when can't get abstract, to allow other plugins to deal
