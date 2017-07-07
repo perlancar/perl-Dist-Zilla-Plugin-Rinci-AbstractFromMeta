@@ -19,7 +19,7 @@ with (
 );
 
 use Data::Dump qw(dump);
-use File::Slurp::Tiny qw(read_file);
+use File::Slurper qw(read_text);
 use File::Spec::Functions qw(catfile);
 
 # either provide filename or filename+filecontent
@@ -89,7 +89,7 @@ sub _get_from_script {
 
     # check if script uses Perinci::CmdLine
     if (!defined($filecontent)) {
-        $filecontent = read_file $filename;
+        $filecontent = read_text $filename;
     } else {
         # we need an actual file later when we feed to pericmd dumper
         require File::Temp;
