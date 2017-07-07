@@ -138,7 +138,7 @@ sub _get_from_script {
         no warnings;
         %main::SPEC = (); # empty first to avoid mixing with other scripts'
         (undef, undef, undef) = Capture::Tiny::capture(sub {
-            eval q{package main; use Perinci::CmdLine::Base::Patch::DumpAndExit -tag=>'$tag', -exit_method=>'die'; do "$filename"};
+            eval q{package main; use Perinci::CmdLine::Base::Patch::DumpAndExit -tag=>'$tag', -exit_method=>'die'; do "./$filename"};
         });
     }
     state $pa = do { require Perinci::Access; Perinci::Access->new };
