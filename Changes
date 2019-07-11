@@ -1,4 +1,4 @@
-0.10    2017-07-07 (PERLANCAR)
+0.10    2017-07-07  Released-By: PERLANCAR
 
 	- [dist] Remove preamble text in Changes.
 
@@ -7,49 +7,49 @@
 	- [dist] Re-pass lint-prereqs (core modules must now be listed).
 
 
-0.09    2015-12-09 (PERLANCAR)
+0.09    2015-12-09  Released-By: PERLANCAR
 
 	- Don't die when can't get abstract, to allow other plugins to deal
 	  with this.
 
 
-0.08    2015-07-07 (PERLANCAR)
+0.08    2015-07-07  Released-By: PERLANCAR
 
 	- Fix logic bug.
 
 
-0.07    2015-07-07 (PERLANCAR)
+0.07    2015-07-07  Released-By: PERLANCAR
 
 	- Handle non-ondisk file.
 
 
-0.06    2014-12-17 (PERLANCAR)
+0.06    2014-12-17  Released-By: PERLANCAR
 
 	- [Bugfix] sort functions from longest meta dump, not shortest.
 
 
-0.05    2014-12-17 (PERLANCAR)
+0.05    2014-12-17  Released-By: PERLANCAR
 
 	- If first function has no summary, try next function; Add logging.
 
 
-0.04    2014-12-16 (PERLANCAR)
+0.04    2014-12-16  Released-By: PERLANCAR
 
 	- Skip generated files for now.
 
 
-0.03    2014-12-16 (PERLANCAR)
+0.03    2014-12-16  Released-By: PERLANCAR
 
         - Support Perinci::CmdLine-based scripts (including ones that embed
           function/metadata in main package).
 
 
-0.02    2014-12-14 (PERLANCAR)
+0.02    2014-12-14  Released-By: PERLANCAR
 
 	- [Bugfix] Checking existing abstract # ABSTRACT should be moved to
 	  _get_abstract_from_meta() routine.
 
 
-0.01     2014-12-14 (PERLANCAR)
+0.01     2014-12-14  Released-By: PERLANCAR
 
          - First release.
